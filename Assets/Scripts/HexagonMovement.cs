@@ -7,16 +7,16 @@ using UnityEngine.ProBuilder.Shapes;
 public class HexagonMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
-
+    [SerializeField] float repeatTrigger;
     float repeatZ;
     Vector3 startPos;
 
     //ProBuilderShape proBuilderShape;
-   
+
     void Start()
     {
         startPos = transform.position;
-        repeatZ = GetComponent<ProBuilderShape>().size.y / 5;
+        repeatZ = GetComponent<ProBuilderShape>().size.y / repeatTrigger;
     }
 
     // Update is called once per frame
