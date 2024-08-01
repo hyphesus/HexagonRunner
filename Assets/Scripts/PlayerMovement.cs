@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<CharacterController>();
+        hexagonMovement = FindObjectOfType<HexagonMovement>();
     }
     void Start()
     {
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
             player.Move(moveVector * speed * Time.deltaTime);
+            hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
         }
     }
 
