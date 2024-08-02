@@ -1,25 +1,29 @@
 using UnityEngine;
 
-public class Draw : MonoBehaviour
+public class DrawForPerspective : MonoBehaviour
 {
     private bool drawing;
     private Collider drawCollider;
     private Camera mainCamera;
     public Vector3 direction { get; private set; }
     public float minDrawVelocity = 0.01f;
+
     private void Awake()
     {
         mainCamera = Camera.main;
         drawCollider = GetComponent<Collider>();
     }
+
     private void OnEnable()
     {
         StopDrawing();
     }
+
     private void OnDisable()
     {
         StopDrawing();
     }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -35,14 +39,10 @@ public class Draw : MonoBehaviour
             ContinueDrawing();
         }
     }
+
     public void StartDrawing()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = mainCamera.nearClipPlane; // Set z to the distance from the camera to the object
-
-        Vector3 newPosition = mainCamera.ScreenToWorldPoint(mousePosition);
-        newPosition.z = 0; // If you want to keep the z position at 0
-
+        Vector3 newPosition = GetMouseWorldPosition();
         transform.position = newPosition;
 
         drawing = true;
@@ -50,6 +50,7 @@ public class Draw : MonoBehaviour
 
         Debug.Log("Start Drawing");
     }
+
     public void StopDrawing()
     {
         drawing = false;
@@ -57,20 +58,28 @@ public class Draw : MonoBehaviour
 
         Debug.Log("Stop Drawing");
     }
+
     public void ContinueDrawing()
     {
         Debug.Log("Continue Drawing");
 
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = mainCamera.nearClipPlane; // Set z to the distance from the camera to the object
-
-        Vector3 newPosition = mainCamera.ScreenToWorldPoint(mousePosition);
-        newPosition.z = 0; // If you want to keep the z position at 0
-
+        Vector3 newPosition = GetMouseWorldPosition();
         direction = newPosition - transform.position;
         float velocity = direction.magnitude / Time.deltaTime;
         drawCollider.enabled = velocity > minDrawVelocity;
 
         transform.position = newPosition;
+    }
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, transform.position.z)); // Assuming drawing on z = 0 plane
+
+        if (plane.Raycast(ray, out float distance))
+        {
+            return ray.GetPoint(distance);
+        }
+        return transform.position; // Default to current position if raycast fails
     }
 }
