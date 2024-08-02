@@ -13,11 +13,11 @@ public class HexagonMovement : MonoBehaviour
 
     //ProBuilderShape proBuilderShape;
 
-    void Start()
-    {
-        startPos = transform.position;
-        repeatZ = GetComponent<ProBuilderShape>().size.y / repeatTrigger;
-    }
+    // void Start()
+    // {
+    //     startPos = transform.position;
+    //     repeatZ = GetComponent<ProBuilderShape>().size.y / repeatTrigger;
+    // }
 
     // Update is called once per frame
     void Update()
@@ -33,5 +33,5 @@ public class HexagonMovement : MonoBehaviour
         {
             transform.position = startPos;
         }
-    }   
+    }
 }
