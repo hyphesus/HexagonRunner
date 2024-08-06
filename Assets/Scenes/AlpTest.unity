@@ -334,14 +334,13 @@ MonoBehaviour:
   - {fileID: 7554031371141521347, guid: 47b48eed8e221c944baf49d8c791e8c3, type: 3}
   - {fileID: 1595937726312338771, guid: 42796f53a023dca41b856176b4a70ab9, type: 3}
   - {fileID: 3761950896825621739, guid: f4c6d6ee0c85e604a85371cd57e23720, type: 3}
-  - {fileID: 3761950896825621739, guid: f4c6d6ee0c85e604a85371cd57e23720, type: 3}
   oRotation:
-  - {x: 0, y: 0, z: 0}
-  - {x: 60, y: 0, z: 0}
-  - {x: 120, y: 0, z: 0}
-  - {x: 180, y: 0, z: 0}
-  - {x: 240, y: 0, z: 0}
-  - {x: 300, y: 0, z: 0}
+  - {x: -90, y: 0, z: 0}
+  - {x: -90, y: 0, z: 60}
+  - {x: -90, y: 0, z: 120}
+  - {x: -90, y: 0, z: 180}
+  - {x: -90, y: 0, z: 240}
+  - {x: -90, y: 0, z: 300}
   oSpeed: 0
   oRandom: 0
   rRandom: 0

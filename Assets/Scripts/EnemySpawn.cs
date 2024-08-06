@@ -38,7 +38,7 @@ public class EnemySpawn : MonoBehaviour
     {
         oRandom = Random.Range(0, oPrefab.Length);
         rRandom = Random.Range(0, oRotation.Length);
-
+        spawnPoint.localRotation = Quaternion.Euler(oRotation[oRandom]);
         //GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], oPrefab[oRandom].transform.position, Quaternion.Euler(oRotation[oRandom]));
         GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], spawnPoint.position, spawnPoint.rotation);
         spawnedObsticle.transform.SetParent(hexagonMovement.gameObject.transform);
