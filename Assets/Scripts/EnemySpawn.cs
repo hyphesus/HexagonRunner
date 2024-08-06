@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemySpawn : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] private int rRandom;
     [SerializeField] private float spawnStartTime;
     [SerializeField] private float spawnPeriod;
+    [SerializeField] private Transform spawnPoint;
 
     float balance;
 
@@ -29,19 +31,16 @@ public class EnemySpawn : MonoBehaviour
 
     void Update()
     {
-        //balance = hexagonMovement.transform.eulerAngles.x;
+
     }
 
     void SpawnObsticle()
     {
         oRandom = Random.Range(0, oPrefab.Length);
         rRandom = Random.Range(0, oRotation.Length);
-       
-        GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], oPrefab[oRandom].transform.position, Quaternion.Euler(oRotation[oRandom]));
+
+        //GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], oPrefab[oRandom].transform.position, Quaternion.Euler(oRotation[oRandom]));
+        GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], spawnPoint.position, spawnPoint.rotation);
         spawnedObsticle.transform.SetParent(hexagonMovement.gameObject.transform);
-
-        //balance = Quaternion.Angle(hexagonMovement.transform.rotation, spawnedObsticle.transform.rotation);
-
-        //spawnedObsticle.transform.localRotation = Quaternion.Euler(spawnedObsticle.transform.eulerAngles.x, spawnedObsticle.transform.eulerAngles.y,spawnedObsticle.transform.eulerAngles.z - balance);
     }
 }
