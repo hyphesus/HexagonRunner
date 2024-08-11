@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LineToPlayerMovement : MonoBehaviour
@@ -7,6 +5,9 @@ public class LineToPlayerMovement : MonoBehaviour
     public Transform parentObject;  // The empty parent object
     private int currentSide = 0;
     private int totalSides = 6;
+
+    private bool isFirstTrigger = true;
+    private int firstTriggeredSide;
 
     void OnTriggerEnter(Collider other)
     {
@@ -17,38 +18,63 @@ public class LineToPlayerMovement : MonoBehaviour
 
             Debug.Log($"Triggered Side: {triggeredSide}, Current Side: {currentSide}");
 
-            // Determine the rotation needed
-            int rotationDifference = triggeredSide - currentSide;
-
-            if (rotationDifference == 0)
+            // First trigger detection
+            if (isFirstTrigger)
             {
-                // No rotation needed, player is already on this side
-                Debug.Log("No rotation needed, player is already on this side.");
-                return;
-            }
+                firstTriggeredSide = triggeredSide;
+                isFirstTrigger = false;
 
-            // Handle rotation wrapping around the hexagon
-            if (rotationDifference > 3)
+                // Check if the player is already on this side
+                if (currentSide == firstTriggeredSide)
+                {
+                    Debug.Log("Player is already on the first triggered side. No rotation needed.");
+                    isFirstTrigger = true;  // Reset for the next interaction
+                }
+                else
+                {
+                    RotateToSide(firstTriggeredSide);
+                }
+            }
+            else
             {
-                rotationDifference -= totalSides;
-                Debug.Log("Adjusting for wrap-around rotation to the left.");
+                // Second trigger detection
+                if (currentSide == triggeredSide)
+                {
+                    Debug.Log("Player has moved to the first triggered side. Now checking second rotation...");
+                    isFirstTrigger = true;  // Reset for the next interaction
+                }
+                else
+                {
+                    RotateToSide(triggeredSide);
+                }
             }
-            else if (rotationDifference < -3)
-            {
-                rotationDifference += totalSides;
-                Debug.Log("Adjusting for wrap-around rotation to the right.");
-            }
-
-            // Log the rotation action
-            Debug.Log($"Rotating Parent Object by {-60f * rotationDifference} degrees on Z axis.");
-
-            // Rotate the parent object
-            parentObject.Rotate(0, 0, -60f * rotationDifference);
-
-            // Update the current side
-            Debug.Log($"Updating current side from {currentSide} to {triggeredSide}.");
-            currentSide = triggeredSide;
         }
     }
 
+    void RotateToSide(int targetSide)
+    {
+        int rotationDifference = targetSide - currentSide;
+
+        // Handle rotation wrapping around the hexagon
+        if (rotationDifference > 3)
+        {
+            rotationDifference -= totalSides;
+            Debug.Log("Adjusting for wrap-around rotation to the left.");
+        }
+        else if (rotationDifference < -3)
+        {
+            rotationDifference += totalSides;
+            Debug.Log("Adjusting for wrap-around rotation to the right.");
+        }
+
+        // Log the rotation action
+        Debug.Log($"Rotating Parent Object by {-60f * rotationDifference} degrees on Z axis.");
+
+        // Rotate the parent object
+        parentObject.Rotate(0, 0, -60f * rotationDifference);
+
+        // Update the current side
+        Debug.Log($"Updating current side from {currentSide} to {targetSide}.");
+        currentSide = targetSide;
+    }
 }
