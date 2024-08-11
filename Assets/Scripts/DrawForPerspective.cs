@@ -48,7 +48,6 @@ public class DrawForPerspective : MonoBehaviour
         drawing = true;
         drawCollider.enabled = true;
 
-        Debug.Log("Start Drawing");
     }
 
     public void StopDrawing()
@@ -56,12 +55,10 @@ public class DrawForPerspective : MonoBehaviour
         drawing = false;
         drawCollider.enabled = false;
 
-        Debug.Log("Stop Drawing");
     }
 
     public void ContinueDrawing()
     {
-        Debug.Log("Continue Drawing");
 
         Vector3 newPosition = GetMouseWorldPosition();
         direction = newPosition - transform.position;
