@@ -109,7 +109,7 @@ Shader "Ultimate 10+ Shaders/Force Field"
                 viewDir = normalize(ObjSpaceViewDir(vert.vertex));
                 output.rim = 1.0 - saturate(dot(viewDir, vert.normal));
 
-                output.uv += _ScrollDirection * _Time.y;
+                output.uv += _ScrollDirection * _Time.y * 10;
 
                 return output;
             }
