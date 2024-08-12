@@ -6,8 +6,8 @@ TagManager:
   tags:
   - Coll1
   - Coll2
-  - Hexagon
   - Draw
+  - SideTrigger
   layers:
   - Default
   - TransparentFX
