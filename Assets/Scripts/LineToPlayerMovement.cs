@@ -11,36 +11,37 @@ public class LineToPlayerMovement : MonoBehaviour
     private int currentSide = 0;  // Starting side index
     private int totalSides = 6;  // Total number of sides (hexagon)
     private List<int> triggeredSides = new List<int>();  // List to store triggered side indices
-    private bool isDrawing = false;  // Flag to check if the player is drawing
 
-    // Method to be called when the player starts drawing
-    public void StartDrawing()
+    private DrawForPerspective drawForPerspective;
+
+    private void Start()
     {
-        Debug.Log("StartDrawing called");
-        if (!isDrawing)
+        drawForPerspective = GetComponent<DrawForPerspective>();  // Get reference to the DrawForPerspective script
+    }
+
+    private void Update()
+    {
+        if (drawForPerspective.isDrawing && !IsDrawingCoroutineRunning())
         {
-            isDrawing = true;
-            StartCoroutine(DrawingSequence());
+            StartCoroutine(StartDrawingSequence());
         }
     }
 
-    // Method to be called when the player stops drawing
-    public void StopDrawing()
+    private bool IsDrawingCoroutineRunning()
     {
-        isDrawing = false;
+        return triggeredSides.Count > 0;  // Check if the coroutine is running by checking if any triggers have been stored
     }
 
-    private IEnumerator DrawingSequence()
+    private IEnumerator StartDrawingSequence()
     {
         triggeredSides.Clear();  // Clear the list at the start of a new drawing sequence
 
-        while (isDrawing)
+        while (drawForPerspective.isDrawing)
         {
-            // Wait for the player to trigger sides during the drawing phase
-            yield return null;  // Wait for the next frame
+            yield return null;  // Wait for the next frame to detect triggers
         }
 
-        // Now that the drawing is complete, process the triggered sides
+        // Drawing has stopped, process the triggered sides
         ProcessTriggeredSides();
         ReassignIndices();  // Reassign the indices at the end of the drawing
     }
@@ -48,17 +49,17 @@ public class LineToPlayerMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("OnTriggerEnter called");
-        Debug.Log("Is Drawing: " + isDrawing);
-        if (isDrawing && other.CompareTag("SideTrigger"))
+
+        if (drawForPerspective.isDrawing && other.CompareTag("SideTrigger"))
         {
             Debug.Log("SideTrigger detected");
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
             Debug.Log($"Triggered Side: {triggeredSide}");
+
             // Only add the side if it's not already in the list
             if (triggeredSides.Count == 0 || triggeredSides[triggeredSides.Count - 1] != triggeredSide)
             {
                 triggeredSides.Add(triggeredSide);
-                Debug.Log($"Triggered Side: {triggeredSide}");
             }
         }
     }
