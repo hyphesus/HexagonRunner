@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &94658384 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4069827747681697968, guid: 54e0ee88dea09164f9db896130330607, type: 3}
+  m_PrefabInstance: {fileID: 1545479773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &169046629
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +502,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9, y: 0.1, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &572878739 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1744184766447569655, guid: 54e0ee88dea09164f9db896130330607, type: 3}
+  m_PrefabInstance: {fileID: 1545479773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &577128211
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +541,11 @@ Transform:
   - {fileID: 1811272893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &584298536 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7220687475514854625, guid: 54e0ee88dea09164f9db896130330607, type: 3}
+  m_PrefabInstance: {fileID: 1545479773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &821416831
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +696,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObject: {fileID: 985271772}
+  rotationDelay: 0.5
+  sideTriggers:
+  - {fileID: 1184419293}
+  - {fileID: 1130023422}
+  - {fileID: 584298536}
+  - {fileID: 572878739}
+  - {fileID: 925195691}
+  - {fileID: 94658384}
 --- !u!54 &828834690
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -708,6 +731,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!4 &925195691 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6070923815672786851, guid: 54e0ee88dea09164f9db896130330607, type: 3}
+  m_PrefabInstance: {fileID: 1545479773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &985271771
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +768,16 @@ Transform:
   - {fileID: 1362823036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!4 &1130023422 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 265225069407157760, guid: 54e0ee88dea09164f9db896130330607, type: 3}
+  m_PrefabInstance: {fileID: 1545479773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1184419293 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8616661480101232348, guid: 54e0ee88dea09164f9db896130330607, type: 3}
+  m_PrefabInstance: {fileID: 1545479773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1280590935
 Mesh:
   m_ObjectHideFlags: 0

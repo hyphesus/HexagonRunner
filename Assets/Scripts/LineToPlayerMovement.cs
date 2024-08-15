@@ -1,57 +1,81 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LineToPlayerMovement : MonoBehaviour
 {
     public Transform parentObject;  // The empty parent object
-    private int currentSide = 0;
-    private int totalSides = 6;
+    public float rotationDelay = 0.5f;  // Delay between rotations for animation purposes
+    public Transform[] sideTriggers;  // Array to store side trigger objects (index 0 to 5)
 
-    private bool isFirstTrigger = true;
-    private int firstTriggeredSide;
+    private int currentSide = 0;  // Starting side index
+    private int totalSides = 6;  // Total number of sides (hexagon)
+    private List<int> triggeredSides = new List<int>();  // List to store triggered side indices
+    private bool isDrawing = false;  // Flag to check if the player is drawing
 
-    void OnTriggerEnter(Collider other)
+    // Method to be called when the player starts drawing
+    public void StartDrawing()
     {
-        // Check if the trigger is tagged correctly
-        if (other.CompareTag("SideTrigger"))
+        if (!isDrawing)
+        {
+            isDrawing = true;
+            StartCoroutine(DrawingSequence());
+        }
+    }
+
+    // Method to be called when the player stops drawing
+    public void StopDrawing()
+    {
+        isDrawing = false;
+    }
+
+    private IEnumerator DrawingSequence()
+    {
+        triggeredSides.Clear();  // Clear the list at the start of a new drawing sequence
+
+        while (isDrawing)
+        {
+            // Wait for the player to trigger sides during the drawing phase
+            yield return null;  // Wait for the next frame
+        }
+
+        // Now that the drawing is complete, process the triggered sides
+        ProcessTriggeredSides();
+        ReassignIndices();  // Reassign the indices at the end of the drawing
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isDrawing && other.CompareTag("SideTrigger"))
         {
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
 
-            Debug.Log($"Triggered Side: {triggeredSide}, Current Side: {currentSide}");
-
-            // First trigger detection
-            if (isFirstTrigger)
+            // Only add the side if it's not already in the list
+            if (triggeredSides.Count == 0 || triggeredSides[triggeredSides.Count - 1] != triggeredSide)
             {
-                firstTriggeredSide = triggeredSide;
-                isFirstTrigger = false;
-
-                // Check if the player is already on this side
-                if (currentSide == firstTriggeredSide)
-                {
-                    Debug.Log("Player is already on the first triggered side. No rotation needed.");
-                    isFirstTrigger = true;  // Reset for the next interaction
-                }
-                else
-                {
-                    RotateToSide(firstTriggeredSide);
-                }
-            }
-            else
-            {
-                // Second trigger detection
-                if (currentSide == triggeredSide)
-                {
-                    Debug.Log("Player has moved to the first triggered side. Now checking second rotation...");
-                    isFirstTrigger = true;  // Reset for the next interaction
-                }
-                else
-                {
-                    RotateToSide(triggeredSide);
-                }
+                triggeredSides.Add(triggeredSide);
+                Debug.Log($"Triggered Side: {triggeredSide}");
             }
         }
     }
 
-    void RotateToSide(int targetSide)
+    private void ProcessTriggeredSides()
+    {
+        for (int i = 0; i < triggeredSides.Count; i++)
+        {
+            int targetSide = triggeredSides[i];
+            StartCoroutine(RotateAfterDelay(targetSide, i * rotationDelay));
+        }
+    }
+
+    private IEnumerator RotateAfterDelay(int targetSide, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        RotateToSide(targetSide);
+    }
+
+    private void RotateToSide(int targetSide)
     {
         int rotationDifference = targetSide - currentSide;
 
@@ -59,22 +83,28 @@ public class LineToPlayerMovement : MonoBehaviour
         if (rotationDifference > 3)
         {
             rotationDifference -= totalSides;
-            Debug.Log("Adjusting for wrap-around rotation to the left.");
         }
         else if (rotationDifference < -3)
         {
             rotationDifference += totalSides;
-            Debug.Log("Adjusting for wrap-around rotation to the right.");
         }
 
-        // Log the rotation action
-        Debug.Log($"Rotating Parent Object by {-60f * rotationDifference} degrees on Z axis.");
-
         // Rotate the parent object
-        parentObject.Rotate(0, 0, -60f * rotationDifference);
+        float rotationAngle = -60f * rotationDifference;
+        parentObject.Rotate(0, 0, rotationAngle);
 
-        // Update the current side
-        Debug.Log($"Updating current side from {currentSide} to {targetSide}.");
+        // Update the current side after rotation
         currentSide = targetSide;
+    }
+
+    private void ReassignIndices()
+    {
+        // Update the indices for each side trigger based on the new orientation
+        for (int i = 0; i < totalSides; i++)
+        {
+            int newSideIndex = (currentSide + i) % totalSides;
+            sideTriggers[i].GetComponent<SideTrigger>().sideIndex = newSideIndex;
+            Debug.Log($"Reassigned SideTrigger_{i} to index {newSideIndex}");
+        }
     }
 }
