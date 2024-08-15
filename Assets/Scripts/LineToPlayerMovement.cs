@@ -16,6 +16,7 @@ public class LineToPlayerMovement : MonoBehaviour
     // Method to be called when the player starts drawing
     public void StartDrawing()
     {
+        Debug.Log("StartDrawing called");
         if (!isDrawing)
         {
             isDrawing = true;
@@ -46,10 +47,13 @@ public class LineToPlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OnTriggerEnter called");
+        Debug.Log("Is Drawing: " + isDrawing);
         if (isDrawing && other.CompareTag("SideTrigger"))
         {
+            Debug.Log("SideTrigger detected");
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
-
+            Debug.Log($"Triggered Side: {triggeredSide}");
             // Only add the side if it's not already in the list
             if (triggeredSides.Count == 0 || triggeredSides[triggeredSides.Count - 1] != triggeredSide)
             {
