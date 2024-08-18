@@ -36,14 +36,20 @@ public class LineToPlayerMovement : MonoBehaviour
     {
         triggeredSides.Clear();  // Clear the list at the start of a new drawing sequence
 
+        // Monitor for the drawing sequence
         while (drawForPerspective.isDrawing)
         {
             yield return null;  // Wait for the next frame to detect triggers
         }
 
         // Drawing has stopped, process the triggered sides
-        ProcessTriggeredSides();
+        if (triggeredSides.Count > 0)
+        {
+            ProcessTriggeredSides();
+        }
+
         ReassignIndices();  // Reassign the indices at the end of the drawing
+        triggeredSides.Clear();  // Clear the list after processing
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,8 +62,8 @@ public class LineToPlayerMovement : MonoBehaviour
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
             Debug.Log($"Triggered Side: {triggeredSide}");
 
-            // Only add the side if it's not already in the list
-            if (triggeredSides.Count == 0 || triggeredSides[triggeredSides.Count - 1] != triggeredSide)
+            // Only add the side if it's not already in the list and if it's the first or subsequent valid trigger
+            if (triggeredSides.Count == 0 || (triggeredSides.Count > 0 && triggeredSides[triggeredSides.Count - 1] != triggeredSide))
             {
                 triggeredSides.Add(triggeredSide);
             }
@@ -96,6 +102,7 @@ public class LineToPlayerMovement : MonoBehaviour
 
         // Rotate the parent object
         float rotationAngle = -60f * rotationDifference;
+        Debug.Log($"Rotating Parent Object by {rotationAngle} degrees from side {currentSide} to side {targetSide}");
         parentObject.Rotate(0, 0, rotationAngle);
 
         // Update the current side after rotation
