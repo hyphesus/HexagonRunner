@@ -1,57 +1,92 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LineToPlayerMovement : MonoBehaviour
 {
     public Transform parentObject;  // The empty parent object
-    private int currentSide = 0;
-    private int totalSides = 6;
+    public float rotationDelay = 0.5f;  // Delay between rotations for animation purposes
+    public Transform[] sideTriggers;  // Array to store side trigger objects (index 0 to 5)
 
-    private bool isFirstTrigger = true;
-    private int firstTriggeredSide;
+    private int currentSide = 0;  // Starting side index
+    private int totalSides = 6;  // Total number of sides (hexagon)
+    private List<int> triggeredSides = new List<int>();  // List to store triggered side indices
 
-    void OnTriggerEnter(Collider other)
+    private DrawForPerspective drawForPerspective;
+
+    private void Start()
     {
-        // Check if the trigger is tagged correctly
-        if (other.CompareTag("SideTrigger"))
+        drawForPerspective = GetComponent<DrawForPerspective>();  // Get reference to the DrawForPerspective script
+    }
+
+    private void Update()
+    {
+        if (drawForPerspective.isDrawing && !IsDrawingCoroutineRunning())
         {
+            StartCoroutine(StartDrawingSequence());
+        }
+    }
+
+    private bool IsDrawingCoroutineRunning()
+    {
+        return triggeredSides.Count > 0;  // Check if the coroutine is running by checking if any triggers have been stored
+    }
+
+    private IEnumerator StartDrawingSequence()
+    {
+        triggeredSides.Clear();  // Clear the list at the start of a new drawing sequence
+
+        // Monitor for the drawing sequence
+        while (drawForPerspective.isDrawing)
+        {
+            yield return null;  // Wait for the next frame to detect triggers
+        }
+
+        // Drawing has stopped, process the triggered sides
+        if (triggeredSides.Count > 0)
+        {
+            ProcessTriggeredSides();
+        }
+
+        ReassignIndices();  // Reassign the indices at the end of the drawing
+        triggeredSides.Clear();  // Clear the list after processing
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("OnTriggerEnter called");
+
+        if (drawForPerspective.isDrawing && other.CompareTag("SideTrigger"))
+        {
+            Debug.Log("SideTrigger detected");
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
+            Debug.Log($"Triggered Side: {triggeredSide}");
 
-            Debug.Log($"Triggered Side: {triggeredSide}, Current Side: {currentSide}");
-
-            // First trigger detection
-            if (isFirstTrigger)
+            // Only add the side if it's not already in the list and if it's the first or subsequent valid trigger
+            if (triggeredSides.Count == 0 || (triggeredSides.Count > 0 && triggeredSides[triggeredSides.Count - 1] != triggeredSide))
             {
-                firstTriggeredSide = triggeredSide;
-                isFirstTrigger = false;
-
-                // Check if the player is already on this side
-                if (currentSide == firstTriggeredSide)
-                {
-                    Debug.Log("Player is already on the first triggered side. No rotation needed.");
-                    isFirstTrigger = true;  // Reset for the next interaction
-                }
-                else
-                {
-                    RotateToSide(firstTriggeredSide);
-                }
-            }
-            else
-            {
-                // Second trigger detection
-                if (currentSide == triggeredSide)
-                {
-                    Debug.Log("Player has moved to the first triggered side. Now checking second rotation...");
-                    isFirstTrigger = true;  // Reset for the next interaction
-                }
-                else
-                {
-                    RotateToSide(triggeredSide);
-                }
+                triggeredSides.Add(triggeredSide);
             }
         }
     }
 
-    void RotateToSide(int targetSide)
+    private void ProcessTriggeredSides()
+    {
+        for (int i = 0; i < triggeredSides.Count; i++)
+        {
+            int targetSide = triggeredSides[i];
+            StartCoroutine(RotateAfterDelay(targetSide, i * rotationDelay));
+        }
+    }
+
+    private IEnumerator RotateAfterDelay(int targetSide, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        RotateToSide(targetSide);
+    }
+
+    private void RotateToSide(int targetSide)
     {
         int rotationDifference = targetSide - currentSide;
 
@@ -59,22 +94,29 @@ public class LineToPlayerMovement : MonoBehaviour
         if (rotationDifference > 3)
         {
             rotationDifference -= totalSides;
-            Debug.Log("Adjusting for wrap-around rotation to the left.");
         }
         else if (rotationDifference < -3)
         {
             rotationDifference += totalSides;
-            Debug.Log("Adjusting for wrap-around rotation to the right.");
         }
 
-        // Log the rotation action
-        Debug.Log($"Rotating Parent Object by {-60f * rotationDifference} degrees on Z axis.");
-
         // Rotate the parent object
-        parentObject.Rotate(0, 0, -60f * rotationDifference);
+        float rotationAngle = -60f * rotationDifference;
+        Debug.Log($"Rotating Parent Object by {rotationAngle} degrees from side {currentSide} to side {targetSide}");
+        parentObject.Rotate(0, 0, rotationAngle);
 
-        // Update the current side
-        Debug.Log($"Updating current side from {currentSide} to {targetSide}.");
+        // Update the current side after rotation
         currentSide = targetSide;
+    }
+
+    private void ReassignIndices()
+    {
+        // Update the indices for each side trigger based on the new orientation
+        for (int i = 0; i < totalSides; i++)
+        {
+            int newSideIndex = (currentSide + i) % totalSides;
+            sideTriggers[i].GetComponent<SideTrigger>().sideIndex = newSideIndex;
+            Debug.Log($"Reassigned SideTrigger_{i} to index {newSideIndex}");
+        }
     }
 }
