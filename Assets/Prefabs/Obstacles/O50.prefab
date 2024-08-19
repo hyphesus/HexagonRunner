@@ -155,6 +155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  poolOffset: -45
+  player: {fileID: 0}
 --- !u!1 &4351468833703231663
 GameObject:
   m_ObjectHideFlags: 0
