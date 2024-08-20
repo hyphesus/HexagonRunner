@@ -1,7 +1,7 @@
 TO DO LIST
 
-- draw a line
-- line detects corridor
+- draw a line / hold on a specific corridor(onTriggerStay)
+- line detects corridor / as long as STAY happens, incremental rotation happens(which gets rid of tilt to move and drawing a line)
 - switch corridor
 - tilt to move
 - veriyi hexagonun duvarında belli bir z ye limitlemek,
