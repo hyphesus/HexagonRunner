@@ -114,8 +114,8 @@ public class LineToPlayerMovement : MonoBehaviour
             yield return null;  // Wait for the next frame
         }
 
-        // Ensure final rotation is accurate
-        parentObject.rotation = Quaternion.Euler(0, 0, endRotation);
+        // Snap to the exact target rotation
+        parentObject.rotation = Quaternion.Euler(0, 0, Mathf.Round(endRotation / 60f) * 60f);
 
         // Update the current side after rotation
         currentSide = targetSide;
