@@ -593,11 +593,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 828834687}
-  - component: {fileID: 828834686}
   - component: {fileID: 828834685}
   - component: {fileID: 828834688}
   - component: {fileID: 828834689}
   - component: {fileID: 828834690}
+  - component: {fileID: 828834691}
   m_Layer: 0
   m_Name: Draw a Line
   m_TagString: Draw
@@ -618,27 +618,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDrawVelocity: 0.01
---- !u!135 &828834686
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828834684}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.25
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &828834687
 Transform:
   m_ObjectHideFlags: 0
@@ -648,8 +627,8 @@ Transform:
   m_GameObject: {fileID: 828834684}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 0, y: -11.35, z: -15}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 340042778}
@@ -681,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObject: {fileID: 985271772}
-  rotationDuration: 1
+  rotationDuration: 0.5
   sideTriggers:
   - {fileID: 900769605}
   - {fileID: 1397465760}
@@ -716,6 +695,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &828834691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828834684}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.50703007, y: 0.5009465, z: 0.5278578}
+  m_Center: {x: 0.0011254847, y: 0, z: -0.0038056374}
 --- !u!1 &900769601 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4222437594554920579, guid: 54e0ee88dea09164f9db896130330607, type: 3}
