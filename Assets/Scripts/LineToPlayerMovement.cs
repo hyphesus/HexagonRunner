@@ -11,6 +11,7 @@ public class LineToPlayerMovement : MonoBehaviour
     private int currentSide = 0;  // Starting side index
     private int totalSides = 6;  // Total number of sides (hexagon)
     private List<int> triggeredSides = new List<int>();  // List to store triggered side indices
+    private List<int> cachedTriggeredSides; // Cached list for performance optimization
 
     private DrawForPerspective drawForPerspective;
 
@@ -78,9 +79,11 @@ public class LineToPlayerMovement : MonoBehaviour
             return;
         }
 
-        for (int i = 1; i < triggeredSides.Count; i++)
+        cachedTriggeredSides = triggeredSides; // Cache the triggered sides for later use
+
+        for (int i = 1; i < cachedTriggeredSides.Count; i++)
         {
-            int targetSide = triggeredSides[i];
+            int targetSide = cachedTriggeredSides[i];
             StartCoroutine(RotateToSideIncrementally(targetSide, rotationDuration));
         }
     }
