@@ -79,18 +79,18 @@ public class LineToPlayerMovement : MonoBehaviour
             return;
         }
 
-        cachedTriggeredSides = triggeredSides; // Cache the triggered sides for later use
-
-        for (int i = 1; i < cachedTriggeredSides.Count; i++)
+        // Iterate through each tuple (pair of consecutive sides) in the triggered list
+        for (int i = 1; i < triggeredSides.Count; i++)
         {
-            int targetSide = cachedTriggeredSides[i];
-            StartCoroutine(RotateToSideIncrementally(targetSide, rotationDuration));
+            int startSide = triggeredSides[i - 1];
+            int targetSide = triggeredSides[i];
+            StartCoroutine(RotateToSideIncrementally(startSide, targetSide, rotationDuration));
         }
     }
 
-    private IEnumerator RotateToSideIncrementally(int targetSide, float duration)
+    private IEnumerator RotateToSideIncrementally(int startSide, int targetSide, float duration)
     {
-        float rotationDifference = targetSide - currentSide;
+        float rotationDifference = targetSide - startSide;
 
         // Calculate the shortest rotation path (clockwise or counterclockwise)
         if (rotationDifference > 3)
@@ -123,4 +123,5 @@ public class LineToPlayerMovement : MonoBehaviour
         // Update the current side after rotation
         currentSide = targetSide;
     }
+
 }
