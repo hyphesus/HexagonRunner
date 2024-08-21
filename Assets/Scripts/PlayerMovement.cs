@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
             if (other.gameObject.CompareTag("Obsticle"))
             {
                 isGameOver = true;
+                PoolManager.instancePM.pooledObjects.Clear();
                 Time.timeScale = 0;
                 Debug.Log("Game Over");
             }

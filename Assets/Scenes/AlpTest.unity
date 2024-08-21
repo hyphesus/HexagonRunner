@@ -757,9 +757,9 @@ MonoBehaviour:
   collectiblePrefabs:
   - {fileID: 5488011134513051698, guid: 7ff390c2efd298c4fa4f3c5e0ac0bd00, type: 3}
   - {fileID: 5488011134513051698, guid: ae63b60fa89d99449ae593c31b8b3510, type: 3}
-  - {fileID: 5488011134513051698, guid: 12f65a56850d63e4489a1ec94c39352f, type: 3}
-  - {fileID: 5488011134513051698, guid: 473a55f63c63f344a98febd389c1098c, type: 3}
   - {fileID: 5488011134513051698, guid: 7c9d30142ff46374a8c99ac3b55c122b, type: 3}
+  - {fileID: 5488011134513051698, guid: 473a55f63c63f344a98febd389c1098c, type: 3}
+  - {fileID: 5488011134513051698, guid: 12f65a56850d63e4489a1ec94c39352f, type: 3}
   pooledObjects: []
   enemySpawn: {fileID: 477179379}
 --- !u!114 &1207643744

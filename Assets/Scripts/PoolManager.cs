@@ -9,6 +9,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject[] obsticlePrefabs;
     [SerializeField] private GameObject[] collectiblePrefabs;
     [SerializeField] public List<GameObject> pooledObjects;
+    [SerializeField] private int poolFactor;
     [SerializeField] private EnemySpawn enemySpawn;
 
     private void Awake()
@@ -24,19 +25,23 @@ public class PoolManager : MonoBehaviour
         }
 
         pooledObjects = new List<GameObject>();
+        poolFactor = (int)enemySpawn.spawnPeriod;
 
-        for (int i = 0; i < obsticlePrefabs.Length; i++)
+        for (int j = 0; j < poolFactor; j++)
         {
-            GameObject obj=Instantiate(obsticlePrefabs[i]);
-            pooledObjects.Add(obj);
-            obj.SetActive(false);
-        }
+            for (int i = 0; i < obsticlePrefabs.Length; i++)
+            {
+                GameObject obj = Instantiate(obsticlePrefabs[i]);
+                pooledObjects.Add(obj);
+                obj.SetActive(false);
+            }
 
-        for (int i = 0;i < collectiblePrefabs.Length; i++)
-        {
-            GameObject obj = Instantiate(collectiblePrefabs[i]);
-            pooledObjects.Add(obj);
-            obj.SetActive(false);
+            for (int i = 0; i < collectiblePrefabs.Length; i++)
+            {
+                GameObject obj = Instantiate(collectiblePrefabs[i]);
+                pooledObjects.Add(obj);
+                obj.SetActive(false);
+            }
         }
     }
 
@@ -51,7 +56,9 @@ public class PoolManager : MonoBehaviour
         }
         else
         {
-            GameObject obj = GetObjectFromPool();
+            GameObject obj = Instantiate(pooledObjects[rObj]);
+            obj.transform.position = enemySpawn.spawnPoint.position;
+            pooledObjects.Add(obj);
             return obj;
         }
     }

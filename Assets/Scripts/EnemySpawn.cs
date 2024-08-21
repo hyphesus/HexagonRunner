@@ -11,7 +11,7 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] private int oRandom;
     [SerializeField] private int rRandom;
     [SerializeField] private float spawnStartTime;
-    [SerializeField] private float spawnPeriod;
+    [SerializeField] public float spawnPeriod;
     [SerializeField] public Transform spawnPoint;
     [SerializeField] private PoolManager poolManager;
 
