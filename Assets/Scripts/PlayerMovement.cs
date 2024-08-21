@@ -31,18 +31,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerMove()
     {
-        speed += 0.001f;
-        Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        if (!isGameOver)
+        {
+            speed += 0.001f;
+            Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 
-        if (moveVector.x != 0)
-        {
-            isMoving = true;
-            //player.Move(moveVector * speed * Time.deltaTime);
-            hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
-        }
-        else
-        {
-            isMoving = false;
+            if (moveVector.x != 0)
+            {
+                isMoving = true;
+                //player.Move(moveVector * speed * Time.deltaTime);
+                hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
+            }
+            else
+            {
+                isMoving = false;
+            }
         }
     }
 
@@ -53,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
             if (other.gameObject.CompareTag("Collectible"))
             {
                 scoreManager.UpdateScore();
+                PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
             }
 
             if (other.gameObject.CompareTag("Obsticle"))

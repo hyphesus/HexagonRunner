@@ -336,7 +336,7 @@ MonoBehaviour:
   oRandom: 0
   rRandom: 0
   spawnStartTime: 2
-  spawnPeriod: 2
+  spawnPeriod: 3
   spawnPoint: {fileID: 1921705251}
   poolManager: {fileID: 1207643743}
 --- !u!1 &675629095 stripped
