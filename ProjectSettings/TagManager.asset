@@ -8,6 +8,8 @@ TagManager:
   - Coll2
   - Draw
   - SideTrigger
+  - Collectible
+  - Obsticle
   layers:
   - Default
   - TransparentFX
