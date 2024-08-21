@@ -39,7 +39,7 @@ public class EnemySpawn : MonoBehaviour
     {
         //oRandom = Random.Range(0, oPrefab.Length);
         rRandom = Random.Range(0, oRotation.Length);
-        spawnPoint.localRotation = Quaternion.Euler(oRotation[oRandom]);
+        spawnPoint.localRotation = Quaternion.Euler(oRotation[rRandom]);
         //GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], spawnPoint.position, spawnPoint.rotation);
         GameObject spawnedObsticle = poolManager.GetObjectFromPool();
         spawnedObsticle.transform.rotation = spawnPoint.rotation;

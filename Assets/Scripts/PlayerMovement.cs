@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
-
+    [SerializeField] public float speed;
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] public bool isGameOver;
     public bool isMoving = false;
+
 
     CharacterController player;
     HexagonMovement hexagonMovement;
@@ -19,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        
+        isGameOver = false;
     }
 
     void Update()
@@ -29,18 +31,40 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerMove()
     {
-        
-        Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        if (!isGameOver)
+        {
+            speed += 0.001f;
+            Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 
-        if (moveVector.x != 0)
-        {
-            isMoving = true;
-            player.Move(moveVector * speed * Time.deltaTime);
-            hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
+            if (moveVector.x != 0)
+            {
+                isMoving = true;
+                //player.Move(moveVector * speed * Time.deltaTime);
+                hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
+            }
+            else
+            {
+                isMoving = false;
+            }
         }
-        else
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isGameOver)
         {
-            isMoving = false;
+            if (other.gameObject.CompareTag("Collectible"))
+            {
+                scoreManager.UpdateScore();
+                PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
+            }
+
+            if (other.gameObject.CompareTag("Obsticle"))
+            {
+                isGameOver = true;
+                Time.timeScale = 0;
+                Debug.Log("Game Over");
+            }
         }
     }
 }

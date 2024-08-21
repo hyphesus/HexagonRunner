@@ -42,7 +42,7 @@ public class PoolManager : MonoBehaviour
 
     public GameObject GetObjectFromPool()
     {
-        int rObj = Random.Range(0, obsticlePrefabs.Length);
+        int rObj = Random.Range(0, pooledObjects.Count);
 
         if (!pooledObjects[rObj].activeSelf)
         {

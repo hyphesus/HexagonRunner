@@ -160,7 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9047c1483dda584590a8f2607df18ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 10
+  scoreManager: {fileID: 1207643744}
+  isGameOver: 0
   isMoving: 0
 --- !u!136 &309498221
 CapsuleCollider:
@@ -177,7 +179,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -711,6 +713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1207643742}
   - component: {fileID: 1207643743}
+  - component: {fileID: 1207643744}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -751,9 +754,26 @@ MonoBehaviour:
   - {fileID: 7554031371141521347, guid: 47b48eed8e221c944baf49d8c791e8c3, type: 3}
   - {fileID: 1595937726312338771, guid: 42796f53a023dca41b856176b4a70ab9, type: 3}
   - {fileID: 3761950896825621739, guid: f4c6d6ee0c85e604a85371cd57e23720, type: 3}
-  collectiblePrefabs: []
+  collectiblePrefabs:
+  - {fileID: 5488011134513051698, guid: 7ff390c2efd298c4fa4f3c5e0ac0bd00, type: 3}
+  - {fileID: 5488011134513051698, guid: ae63b60fa89d99449ae593c31b8b3510, type: 3}
+  - {fileID: 5488011134513051698, guid: 12f65a56850d63e4489a1ec94c39352f, type: 3}
+  - {fileID: 5488011134513051698, guid: 473a55f63c63f344a98febd389c1098c, type: 3}
+  - {fileID: 5488011134513051698, guid: 7c9d30142ff46374a8c99ac3b55c122b, type: 3}
   pooledObjects: []
   enemySpawn: {fileID: 477179379}
+--- !u!114 &1207643744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207643741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e6de03af8bcc44dbe8e4b4aefc34b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756218399
 GameObject:
   m_ObjectHideFlags: 0
