@@ -5,14 +5,15 @@ using UnityEngine;
 public class LineToPlayerMovement : MonoBehaviour
 {
     public Transform parentObject;  // The empty parent object
-    public float rotationDelay = 0.5f;  // Delay between rotations for animation purposes
+    public float rotationDuration = 1f;  // Duration of the rotation in seconds
     public Transform[] sideTriggers;  // Array to store side trigger objects (index 0 to 5)
+    public float debounceTime = 0.1f;  // Time to wait before registering the next side
 
     private int currentSide = 0;  // Starting side index
     private int totalSides = 6;  // Total number of sides (hexagon)
     private List<int> triggeredSides = new List<int>();  // List to store triggered side indices
-
     private DrawForPerspective drawForPerspective;
+    private bool isProcessingRotation = false;
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class LineToPlayerMovement : MonoBehaviour
 
     private bool IsDrawingCoroutineRunning()
     {
-        return triggeredSides.Count > 0;  // Check if the coroutine is running by checking if any triggers have been stored
+        return triggeredSides.Count > 0 || isProcessingRotation;  // Check if the coroutine is running by checking if any triggers have been stored or rotation is in progress
     }
 
     private IEnumerator StartDrawingSequence()
@@ -45,10 +46,10 @@ public class LineToPlayerMovement : MonoBehaviour
         // Drawing has stopped, process the triggered sides
         if (triggeredSides.Count > 0)
         {
+            Debug.Log("Starting ProcessTriggeredSides. Current Side: " + currentSide);
             ProcessTriggeredSides();
         }
 
-        ReassignIndices();  // Reassign the indices at the end of the drawing
         triggeredSides.Clear();  // Clear the list after processing
     }
 
@@ -62,35 +63,69 @@ public class LineToPlayerMovement : MonoBehaviour
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
             Debug.Log($"Triggered Side: {triggeredSide}");
 
-            // Only add the side if it's not already in the list and if it's the first or subsequent valid trigger
+            // Avoid registering the same side too quickly
             if (triggeredSides.Count == 0 || (triggeredSides.Count > 0 && triggeredSides[triggeredSides.Count - 1] != triggeredSide))
             {
+                Debug.Log($"Added side {triggeredSide} to triggeredSides.");
                 triggeredSides.Add(triggeredSide);
+                StartCoroutine(DebounceNextTrigger());
+            }
+            else
+            {
+                Debug.Log($"Side {triggeredSide} already added, skipping.");
             }
         }
     }
 
+    private IEnumerator DebounceNextTrigger()
+    {
+        yield return new WaitForSeconds(debounceTime);  // Wait to avoid double registration of the same side
+    }
+
     private void ProcessTriggeredSides()
     {
-        for (int i = 0; i < triggeredSides.Count; i++)
+        if (triggeredSides.Count > 1 && !isProcessingRotation)
         {
-            int targetSide = triggeredSides[i];
-            StartCoroutine(RotateAfterDelay(targetSide, i * rotationDelay));
+            Debug.Log("Processing Triggered Sides:");
+            for (int i = 0; i < triggeredSides.Count; i++)
+            {
+                Debug.Log($"Side {i}: {triggeredSides[i]}");
+            }
+
+            // Ensure the player starts from the correct side
+            if (triggeredSides[0] != currentSide)
+            {
+                Debug.Log("Player is not on the correct side, skipping the rotation.");
+                return;
+            }
+
+            StartCoroutine(SequentialRotations());
         }
     }
 
-    private IEnumerator RotateAfterDelay(int targetSide, float delay)
+    private IEnumerator SequentialRotations()
     {
-        yield return new WaitForSeconds(delay);
+        isProcessingRotation = true;
 
-        RotateToSide(targetSide);
+        for (int i = 1; i < triggeredSides.Count; i++)
+        {
+            int startSide = triggeredSides[i - 1];
+            int targetSide = triggeredSides[i];
+            Debug.Log($"About to rotate from {startSide} to {targetSide}");
+            yield return StartCoroutine(RotateToSideIncrementally(startSide, targetSide, rotationDuration));
+        }
+
+        Debug.Log("Finished all rotations in sequence.");
+        isProcessingRotation = false;
     }
 
-    private void RotateToSide(int targetSide)
+    private IEnumerator RotateToSideIncrementally(int startSide, int targetSide, float duration)
     {
-        int rotationDifference = targetSide - currentSide;
+        Debug.Log($"StartSide: {startSide}, TargetSide: {targetSide}");
 
-        // Handle rotation wrapping around the hexagon
+        float rotationDifference = targetSide - startSide;
+
+        // Calculate the shortest rotation path (clockwise or counterclockwise)
         if (rotationDifference > 3)
         {
             rotationDifference -= totalSides;
@@ -100,23 +135,28 @@ public class LineToPlayerMovement : MonoBehaviour
             rotationDifference += totalSides;
         }
 
-        // Rotate the parent object
-        float rotationAngle = -60f * rotationDifference;
-        Debug.Log($"Rotating Parent Object by {rotationAngle} degrees from side {currentSide} to side {targetSide}");
-        parentObject.Rotate(0, 0, rotationAngle);
+        Debug.Log($"Rotation Difference: {rotationDifference}");
+
+        // Determine the total angle to rotate
+        float totalRotation = -60f * rotationDifference;  // Negative for counterclockwise
+        float startRotation = parentObject.eulerAngles.z;
+        float endRotation = startRotation + totalRotation;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float currentRotation = Mathf.Lerp(startRotation, endRotation, elapsedTime / duration);
+            parentObject.rotation = Quaternion.Euler(0, 0, currentRotation);
+            yield return null;  // Wait for the next frame
+        }
+
+        // Snap to the exact target rotation
+        parentObject.rotation = Quaternion.Euler(0, 0, Mathf.Round(endRotation / 60f) * 60f);
 
         // Update the current side after rotation
         currentSide = targetSide;
-    }
-
-    private void ReassignIndices()
-    {
-        // Update the indices for each side trigger based on the new orientation
-        for (int i = 0; i < totalSides; i++)
-        {
-            int newSideIndex = (currentSide + i) % totalSides;
-            sideTriggers[i].GetComponent<SideTrigger>().sideIndex = newSideIndex;
-            Debug.Log($"Reassigned SideTrigger_{i} to index {newSideIndex}");
-        }
+        Debug.Log($"Updated Current Side to: {currentSide}");
     }
 }
