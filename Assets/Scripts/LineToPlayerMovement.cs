@@ -12,6 +12,7 @@ public class LineToPlayerMovement : MonoBehaviour
     private int currentSide = 0;  // Starting side index
     private int totalSides = 6;  // Total number of sides (hexagon)
     private List<int> triggeredSides = new List<int>();  // List to store triggered side indices
+    private Queue<int[]> rotationQueue = new Queue<int[]>();  // Queue to store pairs of sides for rotation
     private DrawForPerspective drawForPerspective;
     private bool isProcessingRotation = false;
 
@@ -25,6 +26,11 @@ public class LineToPlayerMovement : MonoBehaviour
         if (drawForPerspective.isDrawing && !IsDrawingCoroutineRunning())
         {
             StartCoroutine(StartDrawingSequence());
+        }
+
+        if (!isProcessingRotation && rotationQueue.Count > 0)
+        {
+            StartCoroutine(ProcessRotationQueue());
         }
     }
 
@@ -43,10 +49,9 @@ public class LineToPlayerMovement : MonoBehaviour
             yield return null;  // Wait for the next frame to detect triggers
         }
 
-        // Drawing has stopped, process the triggered sides
+        // Drawing has stopped, process the remaining triggered sides
         if (triggeredSides.Count > 0)
         {
-            Debug.Log("Starting ProcessTriggeredSides. Current Side: " + currentSide);
             ProcessTriggeredSides();
         }
 
@@ -55,24 +60,25 @@ public class LineToPlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter called");
-
         if (drawForPerspective.isDrawing && other.CompareTag("SideTrigger"))
         {
-            Debug.Log("SideTrigger detected");
             int triggeredSide = other.GetComponent<SideTrigger>().sideIndex;
-            Debug.Log($"Triggered Side: {triggeredSide}");
 
             // Avoid registering the same side too quickly
             if (triggeredSides.Count == 0 || (triggeredSides.Count > 0 && triggeredSides[triggeredSides.Count - 1] != triggeredSide))
             {
-                Debug.Log($"Added side {triggeredSide} to triggeredSides.");
                 triggeredSides.Add(triggeredSide);
+
+                if (triggeredSides.Count == 2)
+                {
+                    // Add the pair to the queue
+                    rotationQueue.Enqueue(new int[] { triggeredSides[0], triggeredSides[1] });
+
+                    // Remove the first element to make room for the next trigger
+                    triggeredSides.RemoveAt(0);
+                }
+
                 StartCoroutine(DebounceNextTrigger());
-            }
-            else
-            {
-                Debug.Log($"Side {triggeredSide} already added, skipping.");
             }
         }
     }
@@ -84,45 +90,37 @@ public class LineToPlayerMovement : MonoBehaviour
 
     private void ProcessTriggeredSides()
     {
-        if (triggeredSides.Count > 1 && !isProcessingRotation)
+        if (triggeredSides.Count > 1)
         {
-            Debug.Log("Processing Triggered Sides:");
-            for (int i = 0; i < triggeredSides.Count; i++)
-            {
-                Debug.Log($"Side {i}: {triggeredSides[i]}");
-            }
-
-            // Ensure the player starts from the correct side
-            if (triggeredSides[0] != currentSide)
-            {
-                Debug.Log("Player is not on the correct side, skipping the rotation.");
-                return;
-            }
-
-            StartCoroutine(SequentialRotations());
+            // If there are remaining sides after the drawing stops, process them
+            rotationQueue.Enqueue(new int[] { triggeredSides[0], triggeredSides[1] });
         }
     }
 
-    private IEnumerator SequentialRotations()
+    private IEnumerator ProcessRotationQueue()
     {
         isProcessingRotation = true;
 
-        for (int i = 1; i < triggeredSides.Count; i++)
+        while (rotationQueue.Count > 0)
         {
-            int startSide = triggeredSides[i - 1];
-            int targetSide = triggeredSides[i];
-            Debug.Log($"About to rotate from {startSide} to {targetSide}");
+            int[] rotationPair = rotationQueue.Dequeue();
+            int startSide = rotationPair[0];
+            int targetSide = rotationPair[1];
+
+            // Check if the player is on the correct start side before rotating
+            if (startSide != currentSide)
+            {
+                continue;  // Skip this rotation and move to the next in the queue
+            }
+
             yield return StartCoroutine(RotateToSideIncrementally(startSide, targetSide, rotationDuration));
         }
 
-        Debug.Log("Finished all rotations in sequence.");
         isProcessingRotation = false;
     }
 
     private IEnumerator RotateToSideIncrementally(int startSide, int targetSide, float duration)
     {
-        Debug.Log($"StartSide: {startSide}, TargetSide: {targetSide}");
-
         float rotationDifference = targetSide - startSide;
 
         // Calculate the shortest rotation path (clockwise or counterclockwise)
@@ -134,8 +132,6 @@ public class LineToPlayerMovement : MonoBehaviour
         {
             rotationDifference += totalSides;
         }
-
-        Debug.Log($"Rotation Difference: {rotationDifference}");
 
         // Determine the total angle to rotate
         float totalRotation = -60f * rotationDifference;  // Negative for counterclockwise
@@ -157,6 +153,5 @@ public class LineToPlayerMovement : MonoBehaviour
 
         // Update the current side after rotation
         currentSide = targetSide;
-        Debug.Log($"Updated Current Side to: {currentSide}");
     }
 }
