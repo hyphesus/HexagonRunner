@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public bool isGameOver;
     public bool isMoving = false;
 
-
+    public MenuManager tryPanel;
     CharacterController player;
     HexagonMovement hexagonMovement;
     EnemySpawn enemySpawn;
@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
                 PoolManager.instancePM.pooledObjects.Clear();
                 Time.timeScale = 0;
                 Debug.Log("Game Over");
+                //try again panelini açma
+                tryPanel.tryPanel.SetActive(true);
             }
         }
     }
