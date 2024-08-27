@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class EnemySpawn : MonoBehaviour
 {
-    //[SerializeField] private GameObject[] oPrefab;
     [SerializeField] private Vector3[] oRotation;
     [SerializeField] private float oSpeed;
     [SerializeField] private int oRandom;
@@ -14,11 +13,11 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] public float spawnPeriod;
     [SerializeField] public Transform spawnPoint;
     [SerializeField] private PoolManager poolManager;
-
-    float balance;
+    [SerializeField] private LineToPlayerMovement lineToPlayerMovement;
 
     HexagonMovement hexagonMovement;
     PlayerMovement playerMovement;
+
     private void Awake()
     {
         hexagonMovement = FindObjectOfType<HexagonMovement>();
@@ -30,20 +29,22 @@ public class EnemySpawn : MonoBehaviour
         InvokeRepeating("SpawnObsticle", spawnStartTime, spawnPeriod);
     }
 
-    void Update()
-    {
-
-    }
-
     void SpawnObsticle()
     {
-        //oRandom = Random.Range(0, oPrefab.Length);
         rRandom = Random.Range(0, oRotation.Length);
         spawnPoint.localRotation = Quaternion.Euler(oRotation[rRandom]);
-        //GameObject spawnedObsticle = Instantiate(oPrefab[oRandom], spawnPoint.position, spawnPoint.rotation);
         GameObject spawnedObsticle = poolManager.GetObjectFromPool();
         spawnedObsticle.transform.rotation = spawnPoint.rotation;
         Debug.Log($"PoolednObjects Count: {poolManager.pooledObjects.Count}");
         spawnedObsticle.transform.SetParent(hexagonMovement.gameObject.transform);
+    }
+
+    public void ClearAllSpawnedEnemies()
+    {
+        foreach (GameObject enemy in poolManager.pooledObjects)
+        {
+            Destroy(enemy);
+        }
+        poolManager.pooledObjects.Clear();
     }
 }

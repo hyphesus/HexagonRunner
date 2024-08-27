@@ -142,4 +142,8 @@ public class LineToPlayerMovement : MonoBehaviour
         parentObject.rotation = Quaternion.Euler(0, 0, Mathf.Round(endRotation / 60f) * 60f);
         currentSide = targetSide;
     }
+    public void ResetCurrentSide()
+    {
+        currentSide = 0;
+    }
 }

@@ -48,6 +48,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public void ResetPlayerScore()
+    {
+        if (scoreManager != null)
+        {
+            scoreManager.ResetScore();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
                 PoolManager.instancePM.pooledObjects.Clear();
                 Time.timeScale = 0;
                 Debug.Log("Game Over");
-                //try again panelini açma
+                //try again panelini aÃ§ma
                 tryPanel.tryPanel.SetActive(true);
             }
         }

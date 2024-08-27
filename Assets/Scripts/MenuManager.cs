@@ -4,33 +4,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class MenuManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject menuPanel;
     public GameObject tryPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject pausePanel;
 
-
-    //  [SerializeField] private Button menuB;//anamenuy� a�ar
     [SerializeField] private Button restartB;
     [SerializeField] private Button optionsB;
     [SerializeField] private Button playB;
-    /* [SerializeField] private Button quitB;
-     [SerializeField] private Button pauseB;
-     [SerializeField] private Button resumeB;
-     [SerializeField] private Button volumeB;*/
     [SerializeField] private Button returnB;
 
-
-
+    [SerializeField] private LineToPlayerMovement lineToPlayerMovement;
 
     void Start()
     {
-
         menuPanel.SetActive(true);
         tryPanel.SetActive(false);
         optionsPanel.SetActive(false);
@@ -42,35 +32,40 @@ public class MenuManager : MonoBehaviour
         playB.onClick.AddListener(playGame);
         optionsB.onClick.AddListener(option);
         returnB.onClick.AddListener(returnMenu);
-
-
-
-    }
-
-    void Update()
-    {
-
     }
 
     public void restart()
     {
-        //
-        Time.timeScale = 1f;
+        // Hide the MainMenu and PausePanel
         menuPanel.SetActive(false);
+        pausePanel.SetActive(false);
+
+        // Hide the tryPanel if it's active
+        tryPanel.SetActive(false);
+
+        // Activate the game panel
         gamePanel.SetActive(true);
+
+        // Clear all spawned items and reset the game state
+        ResetGame();
+
+        // Resume the game
+        Time.timeScale = 1f;
     }
+
     public void playGame()
     {
         Time.timeScale = 1f;
         menuPanel.SetActive(false);
         gamePanel.SetActive(true);
-
     }
+
     public void option()
     {
         menuPanel.SetActive(false);
         optionsPanel.SetActive(true);
     }
+
     public void returnMenu()
     {
         optionsPanel.SetActive(false);
@@ -89,22 +84,14 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
         gamePanel.SetActive(false);
-
     }
 
     public void mainMenu()
     {
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 0f;
-        /*tryPanel.SetActive(false);
-        optionsPanel.SetActive(false);
-        gamePanel.SetActive(false);
-        pausePanel.SetActive(false);
-        menuPanel.SetActive(true);*/
-
-
     }
+
     public void Quit()
     {
 #if UNITY_EDITOR
@@ -112,5 +99,43 @@ public class MenuManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    private void ResetGame()
+    {
+        // Find the PlayerMovement script to reset necessary components
+        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+
+        if (playerMovement != null)
+        {
+            // Clear all spawned enemies and other objects
+            EnemySpawn enemySpawn = FindObjectOfType<EnemySpawn>();
+            if (enemySpawn != null)
+            {
+                enemySpawn.ClearAllSpawnedEnemies();
+            }
+
+            playerMovement.speed = 5f; // Reset to your desired initial speed
+            playerMovement.isGameOver = false;
+            playerMovement.isMoving = false;
+
+            Transform parentObject = playerMovement.transform.parent;
+            if (parentObject != null)
+            {
+                parentObject.position = Vector3.zero;
+                parentObject.rotation = Quaternion.identity;
+            }
+
+            // Reset the player's score through the public method
+            playerMovement.ResetPlayerScore();
+
+            if (lineToPlayerMovement != null)
+            {
+                lineToPlayerMovement.ResetCurrentSide();
+            }
+        }
+
+        // Reset other game-specific components if needed
+        PoolManager.instancePM.ClearAllPooledObjects();
     }
 }

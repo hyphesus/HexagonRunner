@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    public static PoolManager instancePM; 
+    public static PoolManager instancePM;
 
     [SerializeField] private GameObject[] obsticlePrefabs;
     [SerializeField] private GameObject[] collectiblePrefabs;
@@ -67,5 +67,14 @@ public class PoolManager : MonoBehaviour
     {
         obj.transform.position = enemySpawn.spawnPoint.position;
         obj.gameObject.SetActive(false);
+    }
+
+    public void ClearAllPooledObjects()
+    {
+        foreach (GameObject obj in pooledObjects)
+        {
+            Destroy(obj);
+        }
+        pooledObjects.Clear();
     }
 }

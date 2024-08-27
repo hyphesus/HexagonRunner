@@ -14,6 +14,11 @@ public class ScoreManager : MonoBehaviour
     {
         Score++;
         Debug.Log($"Score: {Score}");
-        scoreT.text=Score.ToString();
+        scoreT.text = Score.ToString();
+    }
+    public void ResetScore()
+    {
+        Score = 0;
+        scoreT.text = Score.ToString();
     }
 }
