@@ -13,7 +13,7 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] public float spawnPeriod;
     [SerializeField] public Transform spawnPoint;
     [SerializeField] private PoolManager poolManager;
-    [SerializeField] private LineToPlayerMovement lineToPlayerMovement;
+
 
     HexagonMovement hexagonMovement;
     PlayerMovement playerMovement;

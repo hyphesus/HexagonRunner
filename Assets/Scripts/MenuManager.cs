@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button returnB;
 
     [SerializeField] private LineToPlayerMovement lineToPlayerMovement;
+    [SerializeField] private MusicController musicController;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class MenuManager : MonoBehaviour
         optionsPanel.SetActive(false);
         gamePanel.SetActive(false);
         pausePanel.SetActive(false);
+        musicController.PlayMenuMusic();
 
         Time.timeScale = 0f;
 
@@ -36,17 +38,12 @@ public class MenuManager : MonoBehaviour
 
     public void restart()
     {
-        // Hide the MainMenu and PausePanel
         menuPanel.SetActive(false);
         pausePanel.SetActive(false);
-
-        // Hide the tryPanel if it's active
         tryPanel.SetActive(false);
-
-        // Activate the game panel
         gamePanel.SetActive(true);
+        musicController.PlayInGameMusic();
 
-        // Clear all spawned items and reset the game state
         ResetGame();
 
         // Resume the game
@@ -58,6 +55,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1f;
         menuPanel.SetActive(false);
         gamePanel.SetActive(true);
+        musicController.PlayInGameMusic();
     }
 
     public void option()
@@ -77,6 +75,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
         gamePanel.SetActive(true);
+        musicController.PlayInGameMusic();
     }
 
     public void pause()
@@ -84,6 +83,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
         gamePanel.SetActive(false);
+        musicController.PlayMenuMusic();
     }
 
     public void mainMenu()

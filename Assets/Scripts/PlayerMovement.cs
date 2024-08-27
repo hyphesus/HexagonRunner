@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public float speed;
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] public bool isGameOver;
+    [SerializeField] private MusicController musicController;
     public bool isMoving = false;
 
     public MenuManager tryPanel;
@@ -74,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("Game Over");
                 //try again panelini açma
                 tryPanel.tryPanel.SetActive(true);
+                musicController.PlayMenuMusic();
             }
         }
     }
