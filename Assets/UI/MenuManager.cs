@@ -15,8 +15,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
 
 
-  //  [SerializeField] private Button menuB;//anamenuyü açar
-   // [SerializeField] private Button restartB;
+    //  [SerializeField] private Button menuB;//anamenuyï¿½ aï¿½ar
+    [SerializeField] private Button restartB;
     [SerializeField] private Button optionsB;
     [SerializeField] private Button playB;
     /* [SerializeField] private Button quitB;
@@ -110,7 +110,7 @@ public class MenuManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+        Application.Quit();
 #endif
     }
 }
