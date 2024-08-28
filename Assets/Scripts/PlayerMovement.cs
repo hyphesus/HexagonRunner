@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] public bool isGameOver;
     [SerializeField] private MusicController musicController;
+    [SerializeField] private SfxController sfxController;
     public bool isMoving = false;
 
     public MenuManager tryPanel;
@@ -64,7 +65,9 @@ public class PlayerMovement : MonoBehaviour
             if (other.gameObject.CompareTag("Collectible"))
             {
                 scoreManager.UpdateScore();
+                sfxController.PlayCoinSfx();
                 PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
+
             }
 
             if (other.gameObject.CompareTag("Obsticle"))

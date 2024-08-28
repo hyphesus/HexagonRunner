@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LineToPlayerMovement : MonoBehaviour
 {
+    [SerializeField] private SfxController sfxController;
     public Transform parentObject;
     public float rotationDuration = 1f;
     public Transform[] sideTriggers;
     public float debounceTime = 0.1f;
+
 
     private int currentSide = 0;
     private int totalSides = 6;
@@ -136,6 +138,7 @@ public class LineToPlayerMovement : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float currentRotation = Mathf.Lerp(startRotation, endRotation, elapsedTime / duration);
             parentObject.rotation = Quaternion.Euler(0, 0, currentRotation);
+            sfxController.PlaySwapSfx();
             yield return null;
         }
 
