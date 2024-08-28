@@ -4150,6 +4150,8 @@ MonoBehaviour:
   optionsB: {fileID: 983201697}
   playB: {fileID: 438914036}
   returnB: {fileID: 1115021708}
+  lineToPlayerMovement: {fileID: 2115416239}
+  musicController: {fileID: 2108990993}
 --- !u!4 &698239459
 Transform:
   m_ObjectHideFlags: 0
@@ -5761,6 +5763,8 @@ MonoBehaviour:
   speed: 10
   scoreManager: {fileID: 878557127}
   isGameOver: 0
+  musicController: {fileID: 0}
+  sfxController: {fileID: 0}
   isMoving: 0
   tryPanel: {fileID: 698239458}
 --- !u!143 &1374203403
@@ -8260,7 +8264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5085ae0b55afc41a48fe829c8c2782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 2108990994}
+  audioSources: []
 --- !u!82 &2108990994
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8453,6 +8457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a560028c49fd470fb30ffa275924075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxController: {fileID: 0}
   parentObject: {fileID: 466807769}
   rotationDuration: 0.5
   sideTriggers:

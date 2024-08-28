@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LineToPlayerMovement : MonoBehaviour
 {
-    [SerializeField] private SfxController sfxController;
+    //[SerializeField] private SfxController sfxController;
     public Transform parentObject;
     public float rotationDuration = 1f;
     public Transform[] sideTriggers;
@@ -17,6 +17,11 @@ public class LineToPlayerMovement : MonoBehaviour
     private Queue<int[]> rotationQueue = new Queue<int[]>();
     private DrawForPerspective drawForPerspective;
     private bool isProcessingRotation = false;
+
+
+
+    
+
     // Initializes the reference to DrawForPerspective
     private void Start()
     {
@@ -117,15 +122,17 @@ public class LineToPlayerMovement : MonoBehaviour
     private IEnumerator RotateToSideIncrementally(int startSide, int targetSide, float duration)
     {
         float rotationDifference = targetSide - startSide;
-        sfxController.PlaySwapSfx();
+       // sfxController.PlaySwapSfx();
 
         if (rotationDifference > 3)
         {
             rotationDifference -= totalSides;
+           
         }
         else if (rotationDifference < -3)
         {
             rotationDifference += totalSides;
+          
         }
 
         float totalRotation = -60f * rotationDifference;
@@ -139,12 +146,16 @@ public class LineToPlayerMovement : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float currentRotation = Mathf.Lerp(startRotation, endRotation, elapsedTime / duration);
             parentObject.rotation = Quaternion.Euler(0, 0, currentRotation);
+          
             yield return null;
         }
-
+      
         parentObject.rotation = Quaternion.Euler(0, 0, Mathf.Round(endRotation / 60f) * 60f);
         currentSide = targetSide;
     }
+
+   
+
     public void ResetCurrentSide()
     {
         currentSide = 0;
