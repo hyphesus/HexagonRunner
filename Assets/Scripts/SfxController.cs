@@ -31,7 +31,6 @@ public class SfxController : MonoBehaviour
     // Method to play the menu music (element 0)
     public void PlaySwapSfx()
     {
-        StopCurrentSfx();
         audioSources[0].Play();
         currentTrack = 0;
     }
@@ -39,7 +38,6 @@ public class SfxController : MonoBehaviour
     // Method to play the in-game music (element 1)
     public void PlayCoinSfx()
     {
-        StopCurrentSfx();
         audioSources[1].Play();
         currentTrack = 1;
     }

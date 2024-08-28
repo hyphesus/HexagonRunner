@@ -1207,7 +1207,7 @@ GameObject:
   - component: {fileID: 438515507}
   - component: {fileID: 438515506}
   m_Layer: 0
-  m_Name: MenuManager (1)
+  m_Name: MenuManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2959,7 +2959,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 985271772}
-  - component: {fileID: 985271773}
   - component: {fileID: 985271775}
   m_Layer: 0
   m_Name: Player
@@ -2984,28 +2983,6 @@ Transform:
   - {fileID: 125107505}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &985271773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985271771}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 157687bf47ad6453eb485ced26a292e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
-  player: {fileID: 985271772}
-  corridors:
-  - {fileID: 900769601}
-  - {fileID: 1397465756}
-  - {fileID: 1996936677}
-  - {fileID: 1583797969}
-  - {fileID: 1345835203}
-  - {fileID: 1139627136}
-  rotationSpeed: 10
 --- !u!54 &985271775
 Rigidbody:
   m_ObjectHideFlags: 0

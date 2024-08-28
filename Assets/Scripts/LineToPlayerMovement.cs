@@ -117,6 +117,7 @@ public class LineToPlayerMovement : MonoBehaviour
     private IEnumerator RotateToSideIncrementally(int startSide, int targetSide, float duration)
     {
         float rotationDifference = targetSide - startSide;
+        sfxController.PlaySwapSfx();
 
         if (rotationDifference > 3)
         {
@@ -138,7 +139,6 @@ public class LineToPlayerMovement : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float currentRotation = Mathf.Lerp(startRotation, endRotation, elapsedTime / duration);
             parentObject.rotation = Quaternion.Euler(0, 0, currentRotation);
-            sfxController.PlaySwapSfx();
             yield return null;
         }
 
