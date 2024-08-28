@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             if (other.gameObject.CompareTag("Collectible"))
             {
                 scoreManager.UpdateScore();
-               // sfxController.PlayCoinSfx();
+                sfxController.PlayCoinSfx();
                 PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
 
             }
