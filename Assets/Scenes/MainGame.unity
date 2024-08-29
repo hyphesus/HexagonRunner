@@ -10744,7 +10744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSources:
   - {fileID: 1951481386}
-  - {fileID: 1951481386}
+  - {fileID: 1951481385}
 --- !u!1 &1513923942
 GameObject:
   m_ObjectHideFlags: 0
