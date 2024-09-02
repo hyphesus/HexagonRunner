@@ -7128,7 +7128,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11e3fafdff5ecfe4b8638e2815fb3bdd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5074e5f8f75e42a4db82cfc11f05e688, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8790,6 +8790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a560028c49fd470fb30ffa275924075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxController: {fileID: 0}
   parentObject: {fileID: 172234329}
   rotationDuration: 0.5
   sideTriggers:
