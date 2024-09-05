@@ -109,11 +109,11 @@ public class XXXMenuManager : MonoBehaviour
         if (playerMovement != null)
         {
             // Clear all spawned enemies and other objects
-            EnemySpawn enemySpawn = FindObjectOfType<EnemySpawn>();
-            if (enemySpawn != null)
-            {
-                enemySpawn.ClearAllSpawnedEnemies();
-            }
+            //EnemySpawn enemySpawn = FindObjectOfType<EnemySpawn>();
+            //if (enemySpawn != null)
+            //{
+            //    enemySpawn.ClearAllSpawnedEnemies();
+            //}
 
             playerMovement.speed = 5f; // Reset to your desired initial speed
             playerMovement.isGameOver = false;
