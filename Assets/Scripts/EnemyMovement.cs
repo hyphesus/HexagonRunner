@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
 
     void EnemyMove()
     {
-        transform.Translate(Vector3.forward * -player.GetComponent<PlayerMovement>().speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * -player.GetComponent<XXXPlayerMovement>().speed * Time.deltaTime);
 
         if (transform.position.z <= poolOffset)
         {

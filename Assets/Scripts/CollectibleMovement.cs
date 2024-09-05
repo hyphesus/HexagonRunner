@@ -20,7 +20,7 @@ public class CollectibleMovement : MonoBehaviour
 
     void CollMovement()
     {
-        transform.Translate(Vector3.forward * -player.GetComponent<PlayerMovement>().speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * -player.GetComponent<XXXPlayerMovement>().speed * Time.deltaTime);
         
         int childCount = transform.childCount;
 
