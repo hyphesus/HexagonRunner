@@ -11,6 +11,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] public List<GameObject> pooledObjects;
     [SerializeField] private int poolFactor;
     [SerializeField] private EnemySpawn enemySpawn;
+    [SerializeField] private HexagonMovement hexagonMovement;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class PoolManager : MonoBehaviour
             {
                 GameObject obj = Instantiate(obsticlePrefabs[i]);
                 pooledObjects.Add(obj);
+                obj.transform.SetParent(hexagonMovement.transform);
                 obj.SetActive(false);
             }
 
@@ -40,6 +42,7 @@ public class PoolManager : MonoBehaviour
             {
                 GameObject obj = Instantiate(collectiblePrefabs[i]);
                 pooledObjects.Add(obj);
+                obj.transform.SetParent(hexagonMovement.transform);
                 obj.SetActive(false);
             }
         }
@@ -52,6 +55,11 @@ public class PoolManager : MonoBehaviour
         if (!pooledObjects[rObj].activeSelf)
         {
             pooledObjects[rObj].SetActive(true);
+
+            for (int i = 0; i < pooledObjects[rObj].transform.childCount; i++)
+            {
+                pooledObjects[rObj].transform.GetChild(i).gameObject.SetActive(true);
+            }
             return pooledObjects[rObj];
         }
         else
@@ -59,6 +67,7 @@ public class PoolManager : MonoBehaviour
             GameObject obj = Instantiate(pooledObjects[rObj]);
             obj.transform.position = enemySpawn.spawnPoint.position;
             pooledObjects.Add(obj);
+            obj.transform.SetParent(hexagonMovement.transform);
             return obj;
         }
     }
@@ -69,12 +78,23 @@ public class PoolManager : MonoBehaviour
         obj.gameObject.SetActive(false);
     }
 
-    public void ClearAllPooledObjects()
+    public void ClearSceneOffSpawnables()
     {
-        foreach (GameObject obj in pooledObjects)
+        GameObject[] spawnable = GameObject.FindGameObjectsWithTag("Spawnable");
+
+        foreach (GameObject obj in spawnable)
         {
-            Destroy(obj);
+            obj.transform.position = enemySpawn.spawnPoint.position;
+            obj.gameObject.SetActive(false);
         }
-        pooledObjects.Clear();
     }
+
+    //public void ClearAllPooledObjects()
+    //{
+    //    foreach (GameObject obj in pooledObjects)
+    //    {
+    //        Destroy(obj);
+    //    }
+    //    pooledObjects.Clear();
+    //}
 }

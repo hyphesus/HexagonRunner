@@ -10,6 +10,8 @@ TagManager:
   - SideTrigger
   - Collectible
   - Obsticle
+  - Bullet
+  - Spawnable
   layers:
   - Default
   - TransparentFX

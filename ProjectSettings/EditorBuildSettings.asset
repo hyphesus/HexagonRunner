@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MeryemTest.unity
-    guid: b7d48d0eaf7a6214c9a7f6157b3bdbb1
+    path: Assets/Scenes/XXXMainGame.unity
+    guid: e6f7732179f5d264ca4da6ea00d9747f
   m_configObjects: {}

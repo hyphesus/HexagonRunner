@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour
     {
         transform.Translate(Vector3.forward * -player.GetComponent<XXXPlayerMovement>().speed * Time.deltaTime);
 
-        if (transform.position.z <= poolOffset)
+        if (this.gameObject.activeSelf && transform.position.z <= poolOffset)
         {
             PoolManager.instancePM.ReturnObjectsToPool(this.gameObject);
         }

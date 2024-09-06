@@ -30,7 +30,7 @@ public class CollectibleMovement : MonoBehaviour
             //transform.GetChild(i).Rotate(new Vector3(turnSpeed * Time.deltaTime, 0, turnSpeed * Time.deltaTime));
         }
 
-        if (transform.position.z <= poolOffset)
+        if (this.gameObject.activeSelf && transform.position.z <= poolOffset)
         {
             PoolManager.instancePM.ReturnObjectsToPool(this.gameObject);
         }

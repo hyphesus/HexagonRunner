@@ -100,16 +100,17 @@ public class XXXMenuManager : MonoBehaviour
         Application.Quit();
 #endif
     }
-
+    
     private void ResetGame()
     {
         // Find the PlayerMovement script to reset necessary components
-        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+        XXXPlayerMovement playerMovement = FindObjectOfType<XXXPlayerMovement>();
 
         if (playerMovement != null)
         {
             // Clear all spawned enemies and other objects
-            //EnemySpawn enemySpawn = FindObjectOfType<EnemySpawn>();
+
+            EnemySpawn enemySpawn = FindObjectOfType<EnemySpawn>();
             //if (enemySpawn != null)
             //{
             //    enemySpawn.ClearAllSpawnedEnemies();
@@ -136,6 +137,6 @@ public class XXXMenuManager : MonoBehaviour
         }
 
         // Reset other game-specific components if needed
-        PoolManager.instancePM.ClearAllPooledObjects();
+        //PoolManager.instancePM.ClearAllPooledObjects();
     }
 }

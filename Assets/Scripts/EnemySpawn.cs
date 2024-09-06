@@ -16,12 +16,10 @@ public class EnemySpawn : MonoBehaviour
 
 
     HexagonMovement hexagonMovement;
-    PlayerMovement playerMovement;
 
     private void Awake()
     {
         hexagonMovement = FindObjectOfType<HexagonMovement>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     void Start()
@@ -39,12 +37,12 @@ public class EnemySpawn : MonoBehaviour
         spawnedObsticle.transform.SetParent(hexagonMovement.gameObject.transform);
     }
 
-    public void ClearAllSpawnedEnemies()
-    {
-        foreach (GameObject enemy in poolManager.pooledObjects)
-        {
-            Destroy(enemy);
-        }
-        poolManager.pooledObjects.Clear();
-    }
+    //public void ClearAllSpawnedEnemies()
+    //{
+    //    foreach (GameObject enemy in poolManager.pooledObjects)
+    //    {
+    //        Destroy(enemy);
+    //    }
+    //    poolManager.pooledObjects.Clear();
+    //}
 }

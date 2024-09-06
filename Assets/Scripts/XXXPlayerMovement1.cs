@@ -67,14 +67,15 @@ public class XXXPlayerMovement : MonoBehaviour
             {
                 scoreManager.UpdateScore();
                 sfxController.PlayCoinSfx();
-                PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
-
+                //PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
+                other.gameObject.SetActive(false);
             }
 
             if (other.gameObject.CompareTag("Obsticle"))
             {
                 isGameOver = true;
-                PoolManager.instancePM.pooledObjects.Clear();
+                //PoolManager.instancePM.pooledObjects.Clear();
+                PoolManager.instancePM.ClearSceneOffSpawnables();
                 Time.timeScale = 0;
                 Debug.Log("Game Over");
                 //try again panelini açma

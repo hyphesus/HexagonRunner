@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 1458333206501637051}
   m_Layer: 0
   m_Name: O50
-  m_TagString: Untagged
+  m_TagString: Spawnable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458d3b0bfa0e47e4799ea252c0d9509b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   poolOffset: -45
   player: {fileID: 0}
 --- !u!1 &4351468833703231663

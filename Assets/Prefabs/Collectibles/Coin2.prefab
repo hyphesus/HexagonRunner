@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6414456392658400001}
   m_Layer: 0
   m_Name: Coin2
-  m_TagString: Collectible
+  m_TagString: Spawnable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3903b1ff9bd8bc842b8dc01220db3e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   poolOffset: -45
   turnSpeed: 100
   player: {fileID: 0}
