@@ -3274,8 +3274,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 698239460}
+        m_TargetAssemblyTypeName: XXXMenuManager, Assembly-CSharp
         m_MethodName: resume
         m_Mode: 1
         m_Arguments:
@@ -4170,8 +4170,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 698239460}
+        m_TargetAssemblyTypeName: XXXMenuManager, Assembly-CSharp
         m_MethodName: pause
         m_Mode: 1
         m_Arguments:
@@ -11234,8 +11234,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 698239460}
+        m_TargetAssemblyTypeName: XXXMenuManager, Assembly-CSharp
         m_MethodName: mainMenu
         m_Mode: 1
         m_Arguments:
@@ -11792,8 +11792,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 698239460}
+        m_TargetAssemblyTypeName: XXXMenuManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -11924,8 +11924,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 698239460}
+        m_TargetAssemblyTypeName: XXXMenuManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -12056,8 +12056,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 698239460}
+        m_TargetAssemblyTypeName: XXXMenuManager, Assembly-CSharp
         m_MethodName: mainMenu
         m_Mode: 1
         m_Arguments:
