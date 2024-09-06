@@ -6,9 +6,6 @@ public class RotationWatcher : MonoBehaviour
     public AudioSource audioSource; // The audio source that will play the sound effect
 
     private float lastZRotation; // Stores the last known Z rotation of the target object
-    private float rotationDuration = 1f; // The fixed duration of the rotation
-    private float maxAudioTime = 2.1f; // Max audio playback time, considering a slight offset
-    private bool isRotating = false; // To check if the rotation is currently happening
 
     void Start()
     {
@@ -19,7 +16,7 @@ public class RotationWatcher : MonoBehaviour
 
         if (audioSource != null)
         {
-            audioSource.loop = false; // Ensure the audio source is not set to loop
+            audioSource.loop = true; // Enable looping so it can continuously play while rotating
         }
     }
 
@@ -29,28 +26,22 @@ public class RotationWatcher : MonoBehaviour
         {
             float currentZRotation = targetObject.eulerAngles.z;
 
-            // Check if the rotation has started
-            if (!isRotating && currentZRotation != lastZRotation)
+            // Check if the rotation is changing
+            if (currentZRotation != lastZRotation)
             {
-                isRotating = true;
-                audioSource.time = 0f; // Start from the beginning of the sound
-                audioSource.Play(); // Play the audio once rotation starts
+                // Play the audio if it's not already playing
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
-
-            // Calculate the rotation progress based on time elapsed
-            float rotationProgress = Mathf.Clamp01(Time.time % rotationDuration / rotationDuration);
-
-            // Map the rotation progress to the audio time only if the sound is playing
-            if (audioSource.isPlaying)
+            else
             {
-                audioSource.time = Mathf.Lerp(0f, maxAudioTime, rotationProgress);
-            }
-
-            // Stop the sound once the rotation is completed
-            if (rotationProgress >= 1f)
-            {
-                audioSource.Stop();
-                isRotating = false;
+                // Stop the audio if rotation is no longer changing
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
             }
 
             lastZRotation = currentZRotation; // Update the last known rotation

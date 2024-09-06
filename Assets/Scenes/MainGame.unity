@@ -9466,6 +9466,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eeee30d920d427489a0a62ee9de75f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuPanel: {fileID: 1390161545}
+  tryPanel: {fileID: 1418723084}
+  optionsPanel: {fileID: 1586390605}
+  gamePanel: {fileID: 2147233696}
+  pausePanel: {fileID: 650949437}
+  restartB: {fileID: 136624875}
+  optionsB: {fileID: 1187479220}
+  playB: {fileID: 1279498640}
+  returnB: {fileID: 1783403681}
+  lineToPlayerMovement: {fileID: 2115416239}
+  musicController: {fileID: 477369501}
 --- !u!4 &698239459
 Transform:
   m_ObjectHideFlags: 0
