@@ -27,7 +27,7 @@ public class EnemySpawn : MonoBehaviour
         InvokeRepeating("SpawnObsticle", spawnStartTime, spawnPeriod);
     }
 
-    void SpawnObsticle()
+    public GameObject SpawnObsticle()
     {
         rRandom = Random.Range(0, oRotation.Length);
         spawnPoint.localRotation = Quaternion.Euler(oRotation[rRandom]);
@@ -35,6 +35,7 @@ public class EnemySpawn : MonoBehaviour
         spawnedObsticle.transform.rotation = spawnPoint.rotation;
         Debug.Log($"PoolednObjects Count: {poolManager.pooledObjects.Count}");
         spawnedObsticle.transform.SetParent(hexagonMovement.gameObject.transform);
+        return spawnedObsticle;
     }
 
     //public void ClearAllSpawnedEnemies()

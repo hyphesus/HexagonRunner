@@ -75,7 +75,7 @@ public class XXXPlayerMovement : MonoBehaviour
             {
                 isGameOver = true;
                 //PoolManager.instancePM.pooledObjects.Clear();
-                PoolManager.instancePM.ClearSceneOffSpawnables();
+                PoolManager.instancePM.ClearScene();
                 Time.timeScale = 0;
                 Debug.Log("Game Over");
                 //try again panelini açma
