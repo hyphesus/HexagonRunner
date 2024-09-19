@@ -9,11 +9,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float poolOffset;
     [SerializeField] private GameObject player;
 
-    //HexagonMovement hexagonMovement;
-
     private void Awake()
     {
-        //hexagonMovement = FindObjectOfType<HexagonMovement>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()

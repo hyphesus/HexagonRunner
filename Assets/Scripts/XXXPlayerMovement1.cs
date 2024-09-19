@@ -25,6 +25,7 @@ public class XXXPlayerMovement : MonoBehaviour
     void Start()
     {
         isGameOver = false;
+        Application.targetFrameRate = 120;
     }
 
     void Update()
@@ -67,14 +68,12 @@ public class XXXPlayerMovement : MonoBehaviour
             {
                 scoreManager.UpdateScore();
                 sfxController.PlayCoinSfx();
-                //PoolManager.instancePM.ReturnObjectsToPool(other.gameObject);
                 other.gameObject.SetActive(false);
             }
 
             if (other.gameObject.CompareTag("Obsticle"))
             {
                 isGameOver = true;
-                //PoolManager.instancePM.pooledObjects.Clear();
                 PoolManager.instancePM.ClearScene();
                 Time.timeScale = 0;
                 Debug.Log("Game Over");

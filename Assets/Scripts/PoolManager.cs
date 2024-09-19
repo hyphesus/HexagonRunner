@@ -64,10 +64,6 @@ public class PoolManager : MonoBehaviour
         }
         else
         {
-            //GameObject obj = Instantiate(pooledObjects[rObj]);
-            //obj.transform.position = enemySpawn.spawnPoint.position;
-            //pooledObjects.Add(obj);
-            //obj.transform.SetParent(hexagonMovement.transform);
             GameObject obj= enemySpawn.SpawnObsticle();
             return obj;
         }
@@ -81,14 +77,6 @@ public class PoolManager : MonoBehaviour
 
     public void ClearScene()
     {
-        //GameObject[] spawnable = GameObject.FindGameObjectsWithTag("Spawnable");
-
-        //foreach (GameObject obj in spawnable)
-        //{
-        //    obj.transform.position = enemySpawn.spawnPoint.position;
-        //    obj.gameObject.SetActive(false);
-        //}
-
         for (int i = 0; i < pooledObjects.Count; i++)
         {
             pooledObjects[i].transform.position = enemySpawn.spawnPoint.position;
