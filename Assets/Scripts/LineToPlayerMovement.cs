@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LineToPlayerMovement : MonoBehaviour
 {
+    // DRAW İLE DÖNDÜRME İÇİN: DrawALine nesnesindeki SwipeMovement scriptini ve drawForUpdated scriptini sil, drawForPerspective ve LineToPlayerMovement ekle, atamaları yap ve çalıştır.
     [SerializeField] private SfxController sfxController;
     public Transform parentObject;
     public float rotationDuration = 1f;

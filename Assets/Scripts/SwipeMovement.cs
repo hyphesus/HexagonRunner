@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SwipeMovement : MonoBehaviour
 {
+    // SWİPE İLE DÖNDÜRME SCRİPTİ İÇİN: DrawALine nesnesindeki lineToPlayerMovement scriptini ve drawforperspective scriptini sil, drawForUpdated ve SwipeMovement ekle, atamaları yap ve çalıştır.
     [SerializeField] private SfxController sfxController;
     public Transform parentObject;
     public float rotationDuration = 0.5f; // Döndürme süresi
@@ -11,7 +12,7 @@ public class SwipeMovement : MonoBehaviour
     public float debounceTime = 0.1f;
 
     private Queue<float> rotationQueue = new Queue<float>();
-    private DrawForPerspective drawForPerspective;
+    private DrawForUpdated drawForPerspective;
     private bool isProcessingRotation = false;
 
     private Vector2 startTouchPosition;
@@ -21,7 +22,7 @@ public class SwipeMovement : MonoBehaviour
     // DrawForPerspective referansını başlatır
     private void Start()
     {
-        drawForPerspective = GetComponent<DrawForPerspective>();
+        drawForPerspective = GetComponent<DrawForUpdated>();
     }
 
     // Swipe algılama ve dönüş kuyruğunu işler
