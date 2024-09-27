@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwipeMovement : MonoBehaviour
 {
-    // SWİPE İLE DÖNDÜRME SCRİPTİ İÇİN: DrawALine nesnesindeki lineToPlayerMovement scriptini ve drawforperspective scriptini sil, drawForUpdated ve SwipeMovement ekle, atamaları yap ve çalıştır.
+    // SWİPE İLE DÖNDÜRME SCRİPTİ İÇİN: DrawALine nesnesindeki lineToPlayerMovement scriptini ve drawForUpdated scriptini sil, drawForUpdated ve SwipeMovement ekle, atamaları yap ve çalıştır.
     [SerializeField] private SfxController sfxController;
     public Transform parentObject;
     public float rotationDuration = 0.5f; // Döndürme süresi
@@ -12,24 +12,24 @@ public class SwipeMovement : MonoBehaviour
     public float debounceTime = 0.1f;
 
     private Queue<float> rotationQueue = new Queue<float>();
-    private DrawForUpdated drawForPerspective;
+    private DrawForUpdated drawForUpdated;
     private bool isProcessingRotation = false;
 
     private Vector2 startTouchPosition;
     private Vector2 endTouchPosition;
     private bool isSwiping = false;
 
-    // DrawForPerspective referansını başlatır
+    // drawForUpdated referansını başlatır
     private void Start()
     {
-        drawForPerspective = GetComponent<DrawForUpdated>();
+        drawForUpdated = GetComponent<DrawForUpdated>();
     }
 
     // Swipe algılama ve dönüş kuyruğunu işler
     private void Update()
     {
         // Swipe algılama
-        if (Input.touchCount > 0 && drawForPerspective.isDrawing)
+        if (Input.touchCount > 0 && !drawForUpdated.isDrawing)
         {
             Touch touch = Input.GetTouch(0);
 
@@ -53,7 +53,7 @@ public class SwipeMovement : MonoBehaviour
 
 #if UNITY_EDITOR
         // Unity Editor'da fare girişi ile test etmek için
-        if (Input.GetMouseButtonDown(0) && drawForPerspective.isDrawing)
+        if (Input.GetMouseButtonDown(0) && drawForUpdated.isDrawing)
         {
             isSwiping = true;
             startTouchPosition = Input.mousePosition;
