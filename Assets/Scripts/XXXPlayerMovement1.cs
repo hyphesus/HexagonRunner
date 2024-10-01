@@ -45,6 +45,7 @@ public class XXXPlayerMovement : MonoBehaviour
                 isMoving = true;
                 //player.Move(moveVector * speed * Time.deltaTime);
                 hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
+
             }
             else
             {
