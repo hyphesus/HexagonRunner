@@ -20,6 +20,8 @@ public class XXXMenuManager : MonoBehaviour
     [SerializeField] private LineToPlayerMovement lineToPlayerMovement;
     [SerializeField] private MusicController musicController;
 
+    public bool isGameStarted;
+
     void Start()
     {
         menuPanel.SetActive(true);
@@ -28,7 +30,7 @@ public class XXXMenuManager : MonoBehaviour
         gamePanel.SetActive(false);
         pausePanel.SetActive(false);
         musicController.PlayMenuMusic();
-
+        isGameStarted = false;
         Time.timeScale = 0f;
 
         playB.onClick.AddListener(playGame);
@@ -56,6 +58,7 @@ public class XXXMenuManager : MonoBehaviour
         menuPanel.SetActive(false);
         gamePanel.SetActive(true);
         musicController.PlayInGameMusic();
+        isGameStarted = true;
     }
 
     public void option()
@@ -76,6 +79,7 @@ public class XXXMenuManager : MonoBehaviour
         pausePanel.SetActive(false);
         gamePanel.SetActive(true);
         musicController.PlayInGameMusic();
+        isGameStarted = true;
     }
 
     public void pause()
@@ -84,6 +88,7 @@ public class XXXMenuManager : MonoBehaviour
         pausePanel.SetActive(true);
         gamePanel.SetActive(false);
         musicController.PlayMenuMusic();
+        isGameStarted = false;
     }
 
     public void mainMenu()
@@ -115,10 +120,10 @@ public class XXXMenuManager : MonoBehaviour
             //{
             //    enemySpawn.ClearAllSpawnedEnemies();
             //}
-
-            playerMovement.speed = 5f; // Reset to your desired initial speed
+            playerMovement.speed = 10f; // Reset to your desired initial speed
             playerMovement.isGameOver = false;
             playerMovement.isMoving = false;
+            isGameStarted = true;
 
             Transform parentObject = playerMovement.transform.parent;
             if (parentObject != null)

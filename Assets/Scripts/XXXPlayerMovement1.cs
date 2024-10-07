@@ -6,7 +6,9 @@ using UnityEngine;
 public class XXXPlayerMovement : MonoBehaviour
 {
     [SerializeField] public float speed;
+    [SerializeField] private float accelerationModifier;
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private XXXMenuManager menuManager;
     [SerializeField] public bool isGameOver;
     [SerializeField] private MusicController musicController;
     [SerializeField] private SfxController sfxController;
@@ -37,15 +39,14 @@ public class XXXPlayerMovement : MonoBehaviour
     {
         if (!isGameOver)
         {
-            speed += 0.001f;
+            AccelerateObjects();
             Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 
             if (moveVector.x != 0)
             {
                 isMoving = true;
                 //player.Move(moveVector * speed * Time.deltaTime);
-                hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x, 0));
-
+                hexagonMovement.transform.Rotate(new Vector3(0, moveVector.x * speed * AccelerateObjects() * Time.deltaTime, 0));
             }
             else
             {
@@ -53,6 +54,18 @@ public class XXXPlayerMovement : MonoBehaviour
             }
         }
     }
+
+    public float AccelerateObjects()
+    {
+        if (menuManager.isGameStarted)
+        {
+            speed += accelerationModifier;
+            Debug.Log($"Speed: {speed}");
+        }
+
+        return speed;
+    }
+
     public void ResetPlayerScore()
     {
         if (scoreManager != null)

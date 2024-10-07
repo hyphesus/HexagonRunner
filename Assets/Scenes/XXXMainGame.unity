@@ -223,7 +223,7 @@ Transform:
   m_GameObject: {fileID: 86396819}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: -17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9552,6 +9552,7 @@ MonoBehaviour:
   returnB: {fileID: 1783403681}
   lineToPlayerMovement: {fileID: 0}
   musicController: {fileID: 477369501}
+  isGameStarted: 0
 --- !u!1 &708759429
 GameObject:
   m_ObjectHideFlags: 0
@@ -10177,7 +10178,7 @@ MonoBehaviour:
   oRandom: 0
   rRandom: 0
   spawnStartTime: 2
-  spawnPeriod: 3
+  spawnPeriod: 1.5
   spawnPoint: {fileID: 708759430}
   poolManager: {fileID: 878557126}
 --- !u!4 &1249902757
@@ -10497,7 +10498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1390161546
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10667,7 +10668,7 @@ Transform:
   m_GameObject: {fileID: 1452295739}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.08, y: -7.2, z: 0}
+  m_LocalPosition: {x: 1.08, y: -7.2, z: -9}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10692,7 +10693,7 @@ CharacterController:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
@@ -10800,7 +10801,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  accelerationModifier: 0.001
   scoreManager: {fileID: 878557127}
+  menuManager: {fileID: 698239460}
   isGameOver: 0
   musicController: {fileID: 477369501}
   sfxController: {fileID: 1452295746}
