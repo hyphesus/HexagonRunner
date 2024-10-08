@@ -9691,8 +9691,6 @@ MonoBehaviour:
   - {fileID: 5488011134513051698, guid: 12f65a56850d63e4489a1ec94c39352f, type: 3}
   pooledObjects: []
   poolFactor: 0
-  enemySpawn: {fileID: 1249902756}
-  hexagonMovement: {fileID: 130815862}
 --- !u!114 &878557127
 MonoBehaviour:
   m_ObjectHideFlags: 0

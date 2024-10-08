@@ -59,6 +59,7 @@ public class XXXMenuManager : MonoBehaviour
         gamePanel.SetActive(true);
         musicController.PlayInGameMusic();
         isGameStarted = true;
+        PoolManager.instancePM.CreatePool();
     }
 
     public void option()

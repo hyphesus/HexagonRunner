@@ -12,13 +12,19 @@ public class ScoreManager : MonoBehaviour
 
     public void UpdateScore()
     {
-        Score++;
+        score++;
         Debug.Log($"Score: {Score}");
         scoreT.text = Score.ToString();
+
+        if (score > PlayerPrefs.GetInt("HighScore"))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+        }
     }
     public void ResetScore()
     {
         Score = 0;
         scoreT.text = Score.ToString();
+        Debug.Log($"HighScore: {PlayerPrefs.GetInt("HighScore")}");
     }
 }

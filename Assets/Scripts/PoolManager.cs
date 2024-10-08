@@ -10,8 +10,8 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject[] collectiblePrefabs;
     [SerializeField] public List<GameObject> pooledObjects;
     [SerializeField] private int poolFactor;
-    [SerializeField] private EnemySpawn enemySpawn;
-    [SerializeField] private HexagonMovement hexagonMovement;
+    EnemySpawn enemySpawn;
+    HexagonMovement hexagonMovement;
 
     private void Awake()
     {
@@ -24,6 +24,14 @@ public class PoolManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        CreatePool();
+    }
+
+    public void CreatePool()
+    {
+        enemySpawn = FindObjectOfType<EnemySpawn>();
+        hexagonMovement = FindObjectOfType<HexagonMovement>();
 
         pooledObjects = new List<GameObject>();
         poolFactor = (int)enemySpawn.spawnPeriod;

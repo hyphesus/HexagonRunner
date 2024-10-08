@@ -60,7 +60,7 @@ public class XXXPlayerMovement : MonoBehaviour
         if (menuManager.isGameStarted)
         {
             speed += accelerationModifier;
-            Debug.Log($"Speed: {speed}");
+            //Debug.Log($"Speed: {speed}");
         }
 
         return speed;
