@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class XXXMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
     public GameObject tryPanel;
+    public Text athScoreTxt;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject pausePanel;
@@ -37,6 +39,7 @@ public class XXXMenuManager : MonoBehaviour
         optionsB.onClick.AddListener(option);
         returnB.onClick.AddListener(returnMenu);
     }
+
 
     public void restart()
     {
