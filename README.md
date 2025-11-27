@@ -14,3 +14,5 @@ Within a single game scene, players will continuously advance in the hexagonal t
 
 ## Design Document
 https://docs.google.com/document/d/1uKx3vvTvDfWxwybqaUcn8EX7PxzN0HIyE3h8UxmRQAQ/edit
+
+Unity Editor Version Update 2022.3.62f3
